@@ -1,0 +1,16 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PediatriNobetSistemi.Data;
+
+namespace PediatriNobetSistemi.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    [Authorize(Roles = SeedData.AdminRole)]
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
+}

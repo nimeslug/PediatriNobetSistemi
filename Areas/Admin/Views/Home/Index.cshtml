@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<h1 class="mb-4">Admin Dashboard</h1>
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Bölümler</h5>
+                <p class="display-6">—</p>
+                <a asp-controller="Bolum" asp-action="Index" class="text-white">Yönet →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Asistanlar</h5>
+                <p class="display-6">—</p>
+                <a asp-controller="Asistan" asp-action="Index" class="text-white">Yönet →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Öğretim Üyeleri</h5>
+                <p class="display-6">—</p>
+                <a asp-controller="OgretimUyesi" asp-action="Index" class="text-white">Yönet →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Nöbetler</h5>
+                <p class="display-6">—</p>
+                <a asp-controller="Nobet" asp-action="Index" class="text-white">Yönet →</a>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="mt-4 text-muted">Sol menüden yönetmek istediğiniz bölümü seçin.</p>

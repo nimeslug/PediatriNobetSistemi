@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .sidebar { min-height: calc(100vh - 56px); background-color: #2c3e50; }
+        .sidebar a { color: #ecf0f1; padding: 12px 20px; display: block; text-decoration: none; border-left: 3px solid transparent; }
+        .sidebar a:hover, .sidebar a.active { background-color: #34495e; border-left-color: #3498db; }
+        .admin-content { padding: 30px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                Pediatri Nöbet Sistemi - Admin
+            </a>
+            <div class="text-light">
+                Hoş geldiniz, @User.Identity?.Name
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline ms-3">
+                    <button type="submit" class="btn btn-sm btn-outline-light">Çıkış</button>
+                </form>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-sm btn-outline-light ms-2">Siteye Dön</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 p-0 sidebar">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">📊 Dashboard</a>
+                <a asp-area="Admin" asp-controller="Bolum" asp-action="Index">🏥 Bölümler</a>
+                <a asp-area="Admin" asp-controller="Asistan" asp-action="Index">👨‍⚕️ Asistanlar</a>
+                <a asp-area="Admin" asp-controller="OgretimUyesi" asp-action="Index">👩‍🏫 Öğretim Üyeleri</a>
+                <a asp-area="Admin" asp-controller="Nobet" asp-action="Index">📅 Nöbetler</a>
+                <a asp-area="Admin" asp-controller="Musaitlik" asp-action="Index">🕐 Müsaitlikler</a>
+                <a asp-area="Admin" asp-controller="Randevu" asp-action="Index">📋 Randevular</a>
+                <a asp-area="Admin" asp-controller="AcilDurum" asp-action="Index">🚨 Acil Durumlar</a>
+            </div>
+            <main class="col-md-10 admin-content">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
