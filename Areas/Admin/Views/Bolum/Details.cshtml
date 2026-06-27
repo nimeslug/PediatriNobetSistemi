@@ -1,0 +1,33 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Bolum
+@{
+    ViewData["Title"] = Model.Ad;
+}
+
+<h1>@Model.Ad</h1>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Aciklama</dt>
+    <dd class="col-sm-9">@(Model.Aciklama ?? "—")</dd>
+
+    <dt class="col-sm-3">Hasta Sayisi</dt>
+    <dd class="col-sm-9">@Model.HastaSayisi</dd>
+
+    <dt class="col-sm-3">Bos Yatak</dt>
+    <dd class="col-sm-9">@Model.BosYatakSayisi / @Model.ToplamYatakSayisi</dd>
+
+    <dt class="col-sm-3">Sorumlu Ogretim Uyesi</dt>
+    <dd class="col-sm-9">
+        @if (Model.SorumluOgretimUyesi != null)
+        {
+            @($"{Model.SorumluOgretimUyesi.Unvan} {Model.SorumluOgretimUyesi.Ad} {Model.SorumluOgretimUyesi.Soyad}")
+        }
+        else { <span class="text-muted">—</span> }
+    </dd>
+
+    <dt class="col-sm-3">Asistan Sayisi</dt>
+    <dd class="col-sm-9">@Model.Asistanlar.Count</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Duzenle</a>
+<a asp-action="Index" class="btn btn-secondary">Listeye Don</a>

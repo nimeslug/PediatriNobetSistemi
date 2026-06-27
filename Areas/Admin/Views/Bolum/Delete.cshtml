@@ -1,0 +1,20 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Bolum
+@{
+    ViewData["Title"] = "Bolum Sil";
+}
+
+<h1 class="text-danger">Bolum Sil</h1>
+<div class="alert alert-warning">Bu islem geri alinamaz. Eminseniz Sil tusuna basin.</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Ad</dt><dd class="col-sm-9">@Model.Ad</dd>
+    <dt class="col-sm-3">Aciklama</dt><dd class="col-sm-9">@(Model.Aciklama ?? "—")</dd>
+    <dt class="col-sm-3">Hasta Sayisi</dt><dd class="col-sm-9">@Model.HastaSayisi</dd>
+    <dt class="col-sm-3">Bos Yatak</dt><dd class="col-sm-9">@Model.BosYatakSayisi / @Model.ToplamYatakSayisi</dd>
+</dl>
+
+<form asp-action="Delete" method="post" class="d-inline">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+</form>

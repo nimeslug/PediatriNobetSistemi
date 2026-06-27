@@ -1,0 +1,65 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Bolum
+@{
+    ViewData["Title"] = "Yeni Bolum";
+}
+
+<h1>Yeni Bolum Ekle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Ad" class="form-label"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Aciklama" class="form-label"></label>
+                <textarea asp-for="Aciklama" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Aciklama" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HastaSayisi" class="form-label"></label>
+                    <input asp-for="HastaSayisi" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="HastaSayisi" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="BosYatakSayisi" class="form-label"></label>
+                    <input asp-for="BosYatakSayisi" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="BosYatakSayisi" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="ToplamYatakSayisi" class="form-label"></label>
+                    <input asp-for="ToplamYatakSayisi" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="ToplamYatakSayisi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="GorselUrl" class="form-label">Gorsel URL</label>
+                <input asp-for="GorselUrl" class="form-control" placeholder="https://..." />
+                <span asp-validation-for="GorselUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SorumluOgretimUyesiId" class="form-label">Sorumlu Ogretim Uyesi</label>
+                <select asp-for="SorumluOgretimUyesiId" asp-items="ViewBag.OgretimUyeleri" class="form-select">
+                    <option value="">— Sorumlu yok —</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
