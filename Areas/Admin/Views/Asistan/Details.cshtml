@@ -1,0 +1,34 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Asistan
+@{
+    ViewData["Title"] = $"{Model.Ad} {Model.Soyad}";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @if (!string.IsNullOrEmpty(Model.FotoUrl))
+        {
+            <img src="@Model.FotoUrl" class="img-fluid rounded shadow" alt="@Model.Ad" />
+        }
+        else
+        {
+            <div class="bg-secondary text-white text-center p-5 rounded">Foto yok</div>
+        }
+    </div>
+    <div class="col-md-9">
+        <h1>@Model.Ad @Model.Soyad</h1>
+        <p class="text-muted">@Model.AsistanlikYili. yil asistan</p>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Telefon</dt><dd class="col-sm-9">@Model.Telefon</dd>
+            <dt class="col-sm-3">E-posta</dt><dd class="col-sm-9">@Model.Email</dd>
+            <dt class="col-sm-3">Adres</dt><dd class="col-sm-9">@(Model.Adres ?? "—")</dd>
+            <dt class="col-sm-3">Dogum Tarihi</dt>
+            <dd class="col-sm-9">@(Model.DogumTarihi?.ToString("dd.MM.yyyy") ?? "—")</dd>
+            <dt class="col-sm-3">Bolum</dt>
+            <dd class="col-sm-9">@(Model.Bolum?.Ad ?? "—")</dd>
+            <dt class="col-sm-3">Biyografi</dt><dd class="col-sm-9">@(Model.Biyografi ?? "—")</dd>
+        </dl>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Duzenle</a>
+        <a asp-action="Index" class="btn btn-secondary">Listeye Don</a>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Asistan
+@{
+    ViewData["Title"] = "Yeni Asistan";
+}
+
+<h1>Yeni Asistan Ekle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Ad" class="form-label"></label>
+                    <input asp-for="Ad" class="form-control" />
+                    <span asp-validation-for="Ad" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Soyad" class="form-label"></label>
+                    <input asp-for="Soyad" class="form-control" />
+                    <span asp-validation-for="Soyad" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefon" class="form-label"></label>
+                    <input asp-for="Telefon" class="form-control" placeholder="0555 123 4567" />
+                    <span asp-validation-for="Telefon" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" type="email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Adres" class="form-label"></label>
+                <textarea asp-for="Adres" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DogumTarihi" class="form-label"></label>
+                    <input asp-for="DogumTarihi" class="form-control" type="date" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AsistanlikYili" class="form-label"></label>
+                    <input asp-for="AsistanlikYili" class="form-control" type="number" min="1" max="5" />
+                    <span asp-validation-for="AsistanlikYili" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BolumId" class="form-label">Bolum</label>
+                <select asp-for="BolumId" asp-items="ViewBag.Bolumler" class="form-select">
+                    <option value="">— Bolum sec —</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FotoUrl" class="form-label">Foto URL</label>
+                <input asp-for="FotoUrl" class="form-control" placeholder="https://..." />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Biyografi" class="form-label"></label>
+                <textarea asp-for="Biyografi" class="form-control" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,20 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Asistan
+@{
+    ViewData["Title"] = "Asistan Sil";
+}
+
+<h1 class="text-danger">Asistan Sil</h1>
+<div class="alert alert-warning">Bu islem geri alinamaz. Asistanin tum nobetleri ve randevulari da silinecektir.</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Ad Soyad</dt><dd class="col-sm-9">@Model.Ad @Model.Soyad</dd>
+    <dt class="col-sm-3">E-posta</dt><dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">Telefon</dt><dd class="col-sm-9">@Model.Telefon</dd>
+    <dt class="col-sm-3">Bolum</dt><dd class="col-sm-9">@(Model.Bolum?.Ad ?? "—")</dd>
+</dl>
+
+<form asp-action="Delete" method="post" class="d-inline">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+</form>
