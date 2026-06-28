@@ -1,0 +1,70 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Randevu
+@{
+    ViewData["Title"] = "Randevu Duzenle";
+    var gunAdlari = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Pazartesi" }, { DayOfWeek.Tuesday, "Sali" },
+        { DayOfWeek.Wednesday, "Carsamba" }, { DayOfWeek.Thursday, "Persembe" },
+        { DayOfWeek.Friday, "Cuma" }, { DayOfWeek.Saturday, "Cumartesi" }, { DayOfWeek.Sunday, "Pazar" }
+    };
+    var hoca = (PediatriNobetSistemi.Models.Entities.OgretimUyesi)ViewBag.Hoca;
+    var musaitlikler = (List<PediatriNobetSistemi.Models.Entities.Musaitlik>)ViewBag.Musaitlikler;
+}
+
+<h1>Randevu Duzenle</h1>
+<h5 class="text-muted">@hoca?.Unvan @hoca?.Ad @hoca?.Soyad</h5>
+<hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Duzenle" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="OgretimUyesiId" />
+            <input type="hidden" asp-for="AsistanId" />
+
+            <div class="mb-3">
+                <label asp-for="Tarih" class="form-label"></label>
+                <input asp-for="Tarih" class="form-control" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BaslangicSaati" class="form-label"></label>
+                    <input asp-for="BaslangicSaati" class="form-control" type="time" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BitisSaati" class="form-label"></label>
+                    <input asp-for="BitisSaati" class="form-control" type="time" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Konu" class="form-label">Gorusme Konusu</label>
+                <textarea asp-for="Konu" class="form-control" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guncelle</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">Musaitlik Saatleri</h6>
+                <ul class="list-unstyled mb-0 small">
+                    @if (musaitlikler != null)
+                    {
+                        @foreach (var m in musaitlikler)
+                        {
+                            <li>📅 <strong>@gunAdlari[m.Gun]</strong> @m.BaslangicSaati.ToString(@"hh\:mm") - @m.BitisSaati.ToString(@"hh\:mm")</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

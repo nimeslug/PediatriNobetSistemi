@@ -1,0 +1,90 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Randevu
+@{
+    ViewData["Title"] = "Randevu Olustur";
+    var gunAdlari = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Pazartesi" }, { DayOfWeek.Tuesday, "Sali" },
+        { DayOfWeek.Wednesday, "Carsamba" }, { DayOfWeek.Thursday, "Persembe" },
+        { DayOfWeek.Friday, "Cuma" }, { DayOfWeek.Saturday, "Cumartesi" }, { DayOfWeek.Sunday, "Pazar" }
+    };
+    var hoca = (PediatriNobetSistemi.Models.Entities.OgretimUyesi)ViewBag.Hoca;
+    var musaitlikler = (List<PediatriNobetSistemi.Models.Entities.Musaitlik>)ViewBag.Musaitlikler;
+}
+
+<h1>Randevu Olustur</h1>
+<h5 class="text-muted">@hoca.Unvan @hoca.Ad @hoca.Soyad ile gorusme</h5>
+<hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Olustur" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="OgretimUyesiId" />
+            <input type="hidden" asp-for="AsistanId" />
+
+            <div class="mb-3">
+                <label asp-for="Tarih" class="form-label"></label>
+                <input asp-for="Tarih" class="form-control" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Tarih" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Saat Slotu Sec</label>
+                <select id="slotSec" class="form-select">
+                    <option value="">— Slot sec —</option>
+                    @foreach (var m in musaitlikler)
+                    {
+                        var bas = m.BaslangicSaati.ToString(@"hh\:mm");
+                        var bit = m.BitisSaati.ToString(@"hh\:mm");
+                        <option value="@m.Gun|@bas|@bit">@gunAdlari[m.Gun] - @bas - @bit</option>
+                    }
+                </select>
+                <small class="text-muted">Slot sectiginizde alttaki saatler otomatik dolar.</small>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BaslangicSaati" class="form-label"></label>
+                    <input asp-for="BaslangicSaati" class="form-control" type="time" id="baslangic" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BitisSaati" class="form-label"></label>
+                    <input asp-for="BitisSaati" class="form-control" type="time" id="bitis" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Konu" class="form-label">Gorusme Konusu</label>
+                <textarea asp-for="Konu" class="form-control" rows="3" placeholder="Gorusme amacini kisaca yaziniz..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Randevu Olustur</button>
+            <a asp-action="HocaSec" class="btn btn-secondary">Geri</a>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">@hoca.Unvan @hoca.Ad @hoca.Soyad Musaitlik Saatleri</h6>
+                <ul class="list-unstyled mb-0 small">
+                    @foreach (var m in musaitlikler)
+                    {
+                        <li>📅 <strong>@gunAdlari[m.Gun]</strong> @m.BaslangicSaati.ToString(@"hh\:mm") - @m.BitisSaati.ToString(@"hh\:mm")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('slotSec').addEventListener('change', function () {
+            var v = this.value;
+            if (!v) return;
+            var parts = v.split('|');
+            document.getElementById('baslangic').value = parts[1];
+            document.getElementById('bitis').value = parts[2];
+        });
+    </script>
+}

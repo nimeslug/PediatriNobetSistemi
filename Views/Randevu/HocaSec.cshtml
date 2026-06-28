@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.OgretimUyesi>
+@{
+    ViewData["Title"] = "Ogretim Uyesi Sec";
+    var gunAdlari = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Pzt" }, { DayOfWeek.Tuesday, "Sal" },
+        { DayOfWeek.Wednesday, "Car" }, { DayOfWeek.Thursday, "Per" },
+        { DayOfWeek.Friday, "Cum" }, { DayOfWeek.Saturday, "Cmt" }, { DayOfWeek.Sunday, "Paz" }
+    };
+}
+
+<h1>Yeni Randevu - Ogretim Uyesi Sec</h1>
+<p class="text-muted">Asagidan gorusmek istediginiz ogretim uyesini secin. Sadece musaitlik tanimlamis hocalar listelenir.</p>
+<hr />
+
+<div class="row">
+    @foreach (var hoca in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@hoca.Unvan @hoca.Ad @hoca.Soyad</h5>
+                    <p class="text-muted small mb-2">
+                        @(hoca.Bolum?.Ad ?? "—")
+                        @if (!string.IsNullOrEmpty(hoca.UzmanlikAlani))
+                        {
+                            <span> • @hoca.UzmanlikAlani</span>
+                        }
+                    </p>
+                    <div class="mb-3">
+                        <small class="text-muted">Musait gunler:</small><br />
+                        @foreach (var g in hoca.Musaitlikler.Select(m => m.Gun).Distinct().OrderBy(g => g))
+                        {
+                            <span class="badge bg-info text-dark me-1">@gunAdlari[g]</span>
+                        }
+                    </div>
+                    <a asp-action="Olustur" asp-route-id="@hoca.Id" class="btn btn-primary w-100">Randevu Al</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Su an icin musaitlik tanimlamis ogretim uyesi yok.</div>
+        </div>
+    }
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Geri</a>

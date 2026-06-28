@@ -1,0 +1,96 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.Randevu>
+@{
+    ViewData["Title"] = "Randevularim";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Randevularim</h1>
+        @if (ViewBag.AsistanAdi != null)
+        {
+            <p class="text-muted mb-0">@ViewBag.AsistanAdi</p>
+        }
+    </div>
+    <a asp-action="HocaSec" class="btn btn-success">+ Yeni Randevu Al</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Warning"] != null)
+{
+    <div class="alert alert-warning">@TempData["Warning"]</div>
+}
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tarih</th>
+                    <th>Saatler</th>
+                    <th>Hoca</th>
+                    <th>Konu</th>
+                    <th>Durum</th>
+                    <th class="text-end">Islemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.Tarih.ToString("dd.MM.yyyy")</strong> <small class="text-muted">@item.Tarih.ToString("dddd")</small></td>
+                        <td>@item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")</td>
+                        <td>@item.OgretimUyesi?.Unvan @item.OgretimUyesi?.Ad @item.OgretimUyesi?.Soyad</td>
+                        <td><small>@(item.Konu ?? "—")</small></td>
+                        <td>
+                            @switch (item.Durum)
+                            {
+                                case PediatriNobetSistemi.Models.Entities.RandevuDurumu.Beklemede:
+                                    <span class="badge bg-warning text-dark">Beklemede</span>
+                                    break;
+                                case PediatriNobetSistemi.Models.Entities.RandevuDurumu.Onaylandi:
+                                    <span class="badge bg-success">Onaylandi</span>
+                                    break;
+                                case PediatriNobetSistemi.Models.Entities.RandevuDurumu.Iptal:
+                                    <span class="badge bg-danger">Iptal</span>
+                                    break;
+                                case PediatriNobetSistemi.Models.Entities.RandevuDurumu.Tamamlandi:
+                                    <span class="badge bg-secondary">Tamamlandi</span>
+                                    break;
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (item.Durum == PediatriNobetSistemi.Models.Entities.RandevuDurumu.Beklemede)
+                            {
+                                <a asp-action="Duzenle" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Duzenle</a>
+                                <form asp-action="Iptal" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Iptal edilsin mi?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">Iptal</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">Henuz randevunuz yok. Saga ustteki butondan olusturabilirsiniz.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

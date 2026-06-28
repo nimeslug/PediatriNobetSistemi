@@ -1,0 +1,22 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Randevu
+@{
+    ViewData["Title"] = "Randevu Detayi";
+}
+
+<h1>Randevu Detayi</h1>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Tarih</dt><dd class="col-sm-9">@Model.Tarih.ToString("dd.MM.yyyy dddd")</dd>
+    <dt class="col-sm-3">Saatler</dt>
+    <dd class="col-sm-9">@Model.BaslangicSaati.ToString(@"hh\:mm") - @Model.BitisSaati.ToString(@"hh\:mm")</dd>
+    <dt class="col-sm-3">Asistan</dt><dd class="col-sm-9">@Model.Asistan?.Ad @Model.Asistan?.Soyad</dd>
+    <dt class="col-sm-3">Ogretim Uyesi</dt>
+    <dd class="col-sm-9">@Model.OgretimUyesi?.Unvan @Model.OgretimUyesi?.Ad @Model.OgretimUyesi?.Soyad</dd>
+    <dt class="col-sm-3">Konu</dt><dd class="col-sm-9">@(Model.Konu ?? "—")</dd>
+    <dt class="col-sm-3">Durum</dt><dd class="col-sm-9">@Model.Durum</dd>
+    <dt class="col-sm-3">Olusturma</dt><dd class="col-sm-9">@Model.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Duzenle</a>
+<a asp-action="Index" class="btn btn-secondary">Listeye Don</a>
