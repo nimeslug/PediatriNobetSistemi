@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Nobet Takvimi";
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Nobet Takvimi</h1>
+        <div>
+            <small class="text-muted">Renkler bolume gore degisir. Bir nobete tiklayarak detayini gorebilirsiniz.</small>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <!-- Nobet detay modal -->
+    <div class="modal fade" id="nobetModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nobet Detayi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Asistan</dt>
+                        <dd class="col-sm-8" id="modalAsistan">—</dd>
+                        <dt class="col-sm-4">Bolum</dt>
+                        <dd class="col-sm-8" id="modalBolum">—</dd>
+                        <dt class="col-sm-4">Tarih</dt>
+                        <dd class="col-sm-8" id="modalTarih">—</dd>
+                        <dt class="col-sm-4">Saatler</dt>
+                        <dd class="col-sm-8" id="modalSaatler">—</dd>
+                        <dt class="col-sm-4">Notlar</dt>
+                        <dd class="col-sm-8" id="modalNotlar">—</dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/tr.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const modal = new bootstrap.Modal(document.getElementById('nobetModal'));
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'tr',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                height: 'auto',
+                events: function (info, successCallback, failureCallback) {
+                    fetch(`/Takvim/Events?start=${info.startStr}&end=${info.endStr}`)
+                        .then(r => r.json())
+                        .then(data => successCallback(data))
+                        .catch(err => failureCallback(err));
+                },
+                eventClick: function (info) {
+                    info.jsEvent.preventDefault();
+                    const props = info.event.extendedProps;
+                    document.getElementById('modalAsistan').textContent = props.asistan || '—';
+                    document.getElementById('modalBolum').textContent = props.bolum || '—';
+                    document.getElementById('modalTarih').textContent = info.event.start.toLocaleDateString('tr-TR');
+                    const baslangic = info.event.start.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                    const bitis = info.event.end ? info.event.end.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) : '';
+                    document.getElementById('modalSaatler').textContent = `${baslangic} - ${bitis}`;
+                    document.getElementById('modalNotlar').textContent = props.notlar || '—';
+                    modal.show();
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+}
