@@ -1,0 +1,57 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Musaitlik
+@{
+    ViewData["Title"] = "Musaitlik Duzenle";
+}
+
+<h1>Musaitlik Duzenle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="OgretimUyesiId" class="form-label">Ogretim Uyesi</label>
+                <select asp-for="OgretimUyesiId" asp-items="ViewBag.OgretimUyeleri" class="form-select"></select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Gun" class="form-label"></label>
+                <select asp-for="Gun" class="form-select">
+                    <option value="1">Pazartesi</option>
+                    <option value="2">Sali</option>
+                    <option value="3">Carsamba</option>
+                    <option value="4">Persembe</option>
+                    <option value="5">Cuma</option>
+                    <option value="6">Cumartesi</option>
+                    <option value="0">Pazar</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BaslangicSaati" class="form-label"></label>
+                    <input asp-for="BaslangicSaati" class="form-control" type="time" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BitisSaati" class="form-label"></label>
+                    <input asp-for="BitisSaati" class="form-control" type="time" />
+                </div>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="Aktif" class="form-check-input" />
+                <label asp-for="Aktif" class="form-check-label">Aktif</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guncelle</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

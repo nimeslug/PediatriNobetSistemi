@@ -1,0 +1,26 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Musaitlik
+@{
+    ViewData["Title"] = "Musaitlik Sil";
+    var gunAdlari = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Pazartesi" }, { DayOfWeek.Tuesday, "Sali" },
+        { DayOfWeek.Wednesday, "Carsamba" }, { DayOfWeek.Thursday, "Persembe" },
+        { DayOfWeek.Friday, "Cuma" }, { DayOfWeek.Saturday, "Cumartesi" }, { DayOfWeek.Sunday, "Pazar" }
+    };
+}
+
+<h1 class="text-danger">Musaitlik Sil</h1>
+<div class="alert alert-warning">Bu islem geri alinamaz.</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Ogretim Uyesi</dt>
+    <dd class="col-sm-9">@Model.OgretimUyesi?.Unvan @Model.OgretimUyesi?.Ad @Model.OgretimUyesi?.Soyad</dd>
+    <dt class="col-sm-3">Gun</dt><dd class="col-sm-9">@gunAdlari[Model.Gun]</dd>
+    <dt class="col-sm-3">Saatler</dt>
+    <dd class="col-sm-9">@Model.BaslangicSaati.ToString(@"hh\:mm") - @Model.BitisSaati.ToString(@"hh\:mm")</dd>
+</dl>
+
+<form asp-action="Delete" method="post" class="d-inline">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+</form>
