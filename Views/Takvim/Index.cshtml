@@ -16,7 +16,6 @@
         </div>
     </div>
 
-    <!-- Nobet detay modal -->
     <div class="modal fade" id="nobetModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -47,9 +46,8 @@
 </div>
 
 @section Scripts {
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/tr.global.min.js"></script>
+    <script src="~/lib/fullcalendar/index.global.min.js"></script>
+    <script src="~/lib/fullcalendar/tr.global.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -66,7 +64,9 @@
                 },
                 height: 'auto',
                 events: function (info, successCallback, failureCallback) {
-                    fetch(`/Takvim/Events?start=${info.startStr}&end=${info.endStr}`)
+                    var s = encodeURIComponent(info.startStr);
+                    var e = encodeURIComponent(info.endStr);
+                    fetch('/Takvim/Events?start=' + s + '&end=' + e)
                         .then(r => r.json())
                         .then(data => successCallback(data))
                         .catch(err => failureCallback(err));
@@ -79,7 +79,7 @@
                     document.getElementById('modalTarih').textContent = info.event.start.toLocaleDateString('tr-TR');
                     const baslangic = info.event.start.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
                     const bitis = info.event.end ? info.event.end.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) : '';
-                    document.getElementById('modalSaatler').textContent = `${baslangic} - ${bitis}`;
+                    document.getElementById('modalSaatler').textContent = baslangic + ' - ' + bitis;
                     document.getElementById('modalNotlar').textContent = props.notlar || '—';
                     modal.show();
                 }

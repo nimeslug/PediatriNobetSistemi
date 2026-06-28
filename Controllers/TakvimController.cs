@@ -13,21 +13,22 @@ namespace PediatriNobetSistemi.Controllers
             _db = db;
         }
 
-        // GET: /Takvim
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: /Takvim/Events?start=...&end=...
-        // FullCalendar bu endpoint'ten JSON event listesi ister
         [HttpGet]
         public async Task<IActionResult> Events(DateTime start, DateTime end)
         {
+            // Sadece tarih kismini al, saat farklarini iptal et
+            var baslangic = start.Date;
+            var bitis = end.Date.AddDays(1);
+
             var nobetler = await _db.Nobetler
                 .Include(n => n.Asistan)
                 .Include(n => n.Bolum)
-                .Where(n => n.Tarih >= start && n.Tarih <= end)
+                .Where(n => n.Tarih >= baslangic && n.Tarih < bitis)
                 .ToListAsync();
 
             var events = nobetler.Select(n => new
@@ -48,19 +49,12 @@ namespace PediatriNobetSistemi.Controllers
             return Json(events);
         }
 
-        // Bolum ID'sine gore renk uretir (tutarli ve farkli renkler)
         private static string GetBolumColor(int bolumId)
         {
             var palet = new[]
             {
-                "#e74c3c", // kirmizi
-                "#3498db", // mavi
-                "#2ecc71", // yesil
-                "#f39c12", // turuncu
-                "#9b59b6", // mor
-                "#1abc9c", // turkuaz
-                "#34495e", // koyu lacivert
-                "#e67e22"  // koyu turuncu
+                "#e74c3c", "#3498db", "#2ecc71", "#f39c12",
+                "#9b59b6", "#1abc9c", "#34495e", "#e67e22"
             };
             return palet[bolumId % palet.Length];
         }
