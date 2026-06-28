@@ -1,0 +1,62 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Nobet
+@{
+    ViewData["Title"] = "Yeni Nobet";
+}
+
+<h1>Yeni Nobet Ekle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Tarih" class="form-label"></label>
+                <input asp-for="Tarih" class="form-control" type="date" />
+                <span asp-validation-for="Tarih" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BaslangicSaati" class="form-label"></label>
+                    <input asp-for="BaslangicSaati" class="form-control" type="time" />
+                    <span asp-validation-for="BaslangicSaati" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BitisSaati" class="form-label"></label>
+                    <input asp-for="BitisSaati" class="form-control" type="time" />
+                    <span asp-validation-for="BitisSaati" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AsistanId" class="form-label">Asistan</label>
+                <select asp-for="AsistanId" asp-items="ViewBag.Asistanlar" class="form-select">
+                    <option value="">— Asistan sec —</option>
+                </select>
+                <span asp-validation-for="AsistanId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BolumId" class="form-label">Bolum</label>
+                <select asp-for="BolumId" asp-items="ViewBag.Bolumler" class="form-select">
+                    <option value="">— Bolum sec —</option>
+                </select>
+                <span asp-validation-for="BolumId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Notlar" class="form-label"></label>
+                <textarea asp-for="Notlar" class="form-control" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

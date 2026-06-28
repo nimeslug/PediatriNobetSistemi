@@ -1,0 +1,58 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Nobet
+@{
+    ViewData["Title"] = "Nobet Duzenle";
+}
+
+<h1>Nobet Duzenle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Tarih" class="form-label"></label>
+                <input asp-for="Tarih" class="form-control" type="date" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BaslangicSaati" class="form-label"></label>
+                    <input asp-for="BaslangicSaati" class="form-control" type="time" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BitisSaati" class="form-label"></label>
+                    <input asp-for="BitisSaati" class="form-control" type="time" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AsistanId" class="form-label">Asistan</label>
+                <select asp-for="AsistanId" asp-items="ViewBag.Asistanlar" class="form-select">
+                    <option value="">— Asistan sec —</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BolumId" class="form-label">Bolum</label>
+                <select asp-for="BolumId" asp-items="ViewBag.Bolumler" class="form-select">
+                    <option value="">— Bolum sec —</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Notlar" class="form-label"></label>
+                <textarea asp-for="Notlar" class="form-control" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guncelle</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.Nobet>
+@{
+    ViewData["Title"] = "Nobetler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Nobetler</h1>
+    <a asp-action="Create" class="btn btn-success">+ Yeni Nobet Ekle</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form method="get" class="card card-body mb-3 bg-light">
+    <div class="row align-items-end">
+        <div class="col-md-4">
+            <label class="form-label">Baslangic Tarihi</label>
+            <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Bitis Tarihi</label>
+            <input type="date" name="bitis" value="@ViewBag.Bitis" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Filtrele</button>
+            <a asp-action="Index" class="btn btn-secondary">Temizle</a>
+        </div>
+    </div>
+</form>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tarih</th>
+                    <th>Saatler</th>
+                    <th>Asistan</th>
+                    <th>Bolum</th>
+                    <th>Notlar</th>
+                    <th class="text-end">Islemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.Tarih.ToString("dd.MM.yyyy")</strong> <small class="text-muted">@item.Tarih.ToString("dddd")</small></td>
+                        <td>@item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")</td>
+                        <td>@item.Asistan?.Ad @item.Asistan?.Soyad</td>
+                        <td>@item.Bolum?.Ad</td>
+                        <td><small>@(item.Notlar ?? "")</small></td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detay</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Duzenle</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Sil</a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">Nobet bulunamadi.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Nobet
+@{
+    ViewData["Title"] = "Nobet Sil";
+}
+
+<h1 class="text-danger">Nobet Sil</h1>
+<div class="alert alert-warning">Bu islem geri alinamaz.</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Tarih</dt><dd class="col-sm-9">@Model.Tarih.ToString("dd.MM.yyyy")</dd>
+    <dt class="col-sm-3">Saatler</dt><dd class="col-sm-9">@Model.BaslangicSaati.ToString(@"hh\:mm") - @Model.BitisSaati.ToString(@"hh\:mm")</dd>
+    <dt class="col-sm-3">Asistan</dt><dd class="col-sm-9">@Model.Asistan?.Ad @Model.Asistan?.Soyad</dd>
+    <dt class="col-sm-3">Bolum</dt><dd class="col-sm-9">@Model.Bolum?.Ad</dd>
+</dl>
+
+<form asp-action="Delete" method="post" class="d-inline">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+</form>
