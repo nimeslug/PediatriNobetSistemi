@@ -1,0 +1,81 @@
+﻿@model PediatriNobetSistemi.Models.Entities.OgretimUyesi
+@{
+    ViewData["Title"] = $"{Model.Unvan} {Model.Ad} {Model.Soyad}";
+    var gunAdlari = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Pazartesi" }, { DayOfWeek.Tuesday, "Sali" },
+        { DayOfWeek.Wednesday, "Carsamba" }, { DayOfWeek.Thursday, "Persembe" },
+        { DayOfWeek.Friday, "Cuma" }, { DayOfWeek.Saturday, "Cumartesi" }, { DayOfWeek.Sunday, "Pazar" }
+    };
+}
+
+<a asp-action="Index" class="btn btn-link mb-3">← Tum ogretim uyeleri</a>
+
+<div class="row">
+    <div class="col-md-4 text-center">
+        @if (!string.IsNullOrEmpty(Model.FotoUrl))
+        {
+            <img src="@Model.FotoUrl" class="rounded-circle shadow" style="width: 220px; height: 220px; object-fit: cover;" />
+        }
+        else
+        {
+            <div class="rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center shadow" style="width: 220px; height: 220px; font-size: 4rem;">
+                @Model.Ad.FirstOrDefault()@Model.Soyad.FirstOrDefault()
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        <h1>@Model.Unvan @Model.Ad @Model.Soyad</h1>
+        @if (!string.IsNullOrEmpty(Model.UzmanlikAlani))
+        {
+            <p class="lead text-muted">@Model.UzmanlikAlani</p>
+        }
+        @if (Model.Bolum != null)
+        {
+            <span class="badge bg-info text-dark fs-6">@Model.Bolum.Ad</span>
+        }
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Telefon</dt><dd class="col-sm-9">@Model.Telefon</dd>
+            <dt class="col-sm-3">E-posta</dt><dd class="col-sm-9">@Model.Email</dd>
+            @if (!string.IsNullOrEmpty(Model.Adres))
+            {
+                <dt class="col-sm-3">Adres</dt><dd class="col-sm-9">@Model.Adres</dd>
+            }
+        </dl>
+        @if (!string.IsNullOrEmpty(Model.Ozgecmis))
+        {
+            <h5 class="mt-4">Ozgecmis</h5>
+            <p style="white-space: pre-wrap;">@Model.Ozgecmis</p>
+        }
+    </div>
+</div>
+
+@if (Model.Musaitlikler.Any())
+{
+    <hr class="my-4" />
+    <h3>🕐 Randevu Saatleri</h3>
+    <div class="row mt-3">
+        @foreach (var grup in Model.Musaitlikler.GroupBy(m => m.Gun).OrderBy(g => g.Key))
+        {
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h6 class="mb-2">@gunAdlari[grup.Key]</h6>
+                        @foreach (var slot in grup.OrderBy(s => s.BaslangicSaati))
+                        {
+                            <div class="small">⏰ @slot.BaslangicSaati.ToString(@"hh\:mm") - @slot.BitisSaati.ToString(@"hh\:mm")</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a asp-controller="Randevu" asp-action="Olustur" asp-route-id="@Model.Id" class="btn btn-success mt-3">Bu hocadan randevu al</a>
+    }
+    else
+    {
+        <p class="text-muted mt-3"><a asp-controller="Account" asp-action="Login">Giris yaparak</a> randevu alabilirsiniz.</p>
+    }
+}

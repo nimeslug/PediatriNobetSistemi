@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.Bolum>
+@{
+    ViewData["Title"] = "Bolumler";
+}
+
+<div class="mb-4">
+    <h1>🏥 Pediatri Bolumleri</h1>
+    <p class="text-muted">Pediatri klinigimizin bolumleri ve guncel durumlari</p>
+</div>
+
+<div class="row">
+    @foreach (var b in Model)
+    {
+        var dolulukOrani = b.ToplamYatakSayisi > 0
+            ? (int)Math.Round(((double)(b.ToplamYatakSayisi - b.BosYatakSayisi) / b.ToplamYatakSayisi) * 100)
+            : 0;
+        var dolulukRenk = dolulukOrani > 80 ? "danger" : dolulukOrani > 50 ? "warning" : "success";
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                @if (!string.IsNullOrEmpty(b.GorselUrl))
+                {
+                    <img src="@b.GorselUrl" class="card-img-top" alt="@b.Ad" style="height: 180px; object-fit: cover;" />
+                }
+                else
+                {
+                    <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 180px;">
+                        <i style="font-size: 3rem;">🏥</i>
+                    </div>
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@b.Ad</h5>
+                    <p class="card-text small text-muted">
+                        @(b.Aciklama?.Length > 100 ? b.Aciklama.Substring(0, 100) + "..." : b.Aciklama)
+                    </p>
+                    <div class="row text-center small mb-3">
+                        <div class="col-4">
+                            <div class="text-muted">Hasta</div>
+                            <div><strong>@b.HastaSayisi</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted">Bos Yatak</div>
+                            <div><strong class="text-success">@b.BosYatakSayisi</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted">Asistan</div>
+                            <div><strong>@b.Asistanlar.Count</strong></div>
+                        </div>
+                    </div>
+                    @if (b.ToplamYatakSayisi > 0)
+                    {
+                        <div class="mb-2">
+                            <small class="text-muted">Yatak Doluluk: %@dolulukOrani</small>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-@dolulukRenk" style="width: @dolulukOrani%"></div>
+                            </div>
+                        </div>
+                    }
+                    @if (b.SorumluOgretimUyesi != null)
+                    {
+                        <p class="small mb-2">
+                            <strong>Sorumlu:</strong> @b.SorumluOgretimUyesi.Unvan @b.SorumluOgretimUyesi.Ad @b.SorumluOgretimUyesi.Soyad
+                        </p>
+                    }
+                    <a asp-action="Detay" asp-route-id="@b.Id" class="btn btn-primary btn-sm w-100">Detayli Bilgi</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Henuz bolum kayitli degil.</div>
+        </div>
+    }
+</div>

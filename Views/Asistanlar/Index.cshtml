@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.Asistan>
+@{
+    ViewData["Title"] = "Asistanlar";
+}
+
+<div class="mb-4">
+    <h1>👨‍⚕️ Pediatri Asistanlari</h1>
+    <p class="text-muted">Klinigimizde gorev yapan asistanlar</p>
+</div>
+
+<div class="row">
+    @foreach (var a in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(a.FotoUrl))
+                    {
+                        <img src="@a.FotoUrl" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 2rem;">
+                            @a.Ad.FirstOrDefault()@a.Soyad.FirstOrDefault()
+                        </div>
+                    }
+                    <h5 class="mb-1">@a.Ad @a.Soyad</h5>
+                    <p class="text-muted small mb-2">
+                        @a.AsistanlikYili. yil asistani
+                        @if (a.Bolum != null)
+                        {
+                            <span> • @a.Bolum.Ad</span>
+                        }
+                    </p>
+                    <div class="small text-start mt-3">
+                        <p class="mb-1">📞 @a.Telefon</p>
+                        <p class="mb-2">📧 @a.Email</p>
+                    </div>
+                    <a asp-action="Detay" asp-route-id="@a.Id" class="btn btn-outline-primary btn-sm w-100">Detayli Bilgi</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Henuz asistan kayitli degil.</div>
+        </div>
+    }
+</div>

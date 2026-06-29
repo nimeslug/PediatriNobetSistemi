@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.OgretimUyesi>
+@{
+    ViewData["Title"] = "Ogretim Uyeleri";
+}
+
+<div class="mb-4">
+    <h1>👩‍🏫 Ogretim Uyeleri</h1>
+    <p class="text-muted">Pediatri bolumumuzde gorev yapan ogretim uyeleri</p>
+</div>
+
+<div class="row">
+    @foreach (var o in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(o.FotoUrl))
+                    {
+                        <img src="@o.FotoUrl" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 2rem;">
+                            @o.Ad.FirstOrDefault()@o.Soyad.FirstOrDefault()
+                        </div>
+                    }
+                    <h5 class="mb-1">@o.Unvan @o.Ad @o.Soyad</h5>
+                    @if (!string.IsNullOrEmpty(o.UzmanlikAlani))
+                    {
+                        <p class="text-muted small mb-2">@o.UzmanlikAlani</p>
+                    }
+                    @if (o.Bolum != null)
+                    {
+                        <span class="badge bg-info text-dark mb-3">@o.Bolum.Ad</span>
+                    }
+                    <div class="small text-start mt-3">
+                        <p class="mb-1">📞 @o.Telefon</p>
+                        <p class="mb-2">📧 @o.Email</p>
+                    </div>
+                    <a asp-action="Detay" asp-route-id="@o.Id" class="btn btn-outline-info btn-sm w-100">Detayli Bilgi</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Henuz ogretim uyesi kayitli degil.</div>
+        </div>
+    }
+</div>

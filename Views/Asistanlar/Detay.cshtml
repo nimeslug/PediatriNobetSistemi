@@ -1,0 +1,76 @@
+﻿@model PediatriNobetSistemi.Models.Entities.Asistan
+@{
+    ViewData["Title"] = $"{Model.Ad} {Model.Soyad}";
+}
+
+<a asp-action="Index" class="btn btn-link mb-3">← Tum asistanlar</a>
+
+<div class="row">
+    <div class="col-md-4 text-center">
+        @if (!string.IsNullOrEmpty(Model.FotoUrl))
+        {
+            <img src="@Model.FotoUrl" class="rounded-circle shadow" style="width: 220px; height: 220px; object-fit: cover;" />
+        }
+        else
+        {
+            <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center shadow" style="width: 220px; height: 220px; font-size: 4rem;">
+                @Model.Ad.FirstOrDefault()@Model.Soyad.FirstOrDefault()
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        <h1>@Model.Ad @Model.Soyad</h1>
+        <p class="lead text-muted">
+            @Model.AsistanlikYili. yil pediatri asistani
+            @if (Model.Bolum != null)
+            {
+                <span> • @Model.Bolum.Ad</span>
+            }
+        </p>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Telefon</dt><dd class="col-sm-9">@Model.Telefon</dd>
+            <dt class="col-sm-3">E-posta</dt><dd class="col-sm-9">@Model.Email</dd>
+            @if (!string.IsNullOrEmpty(Model.Adres))
+            {
+                <dt class="col-sm-3">Adres</dt><dd class="col-sm-9">@Model.Adres</dd>
+            }
+            @if (Model.DogumTarihi.HasValue)
+            {
+                <dt class="col-sm-3">Dogum Tarihi</dt><dd class="col-sm-9">@Model.DogumTarihi.Value.ToString("dd.MM.yyyy")</dd>
+            }
+        </dl>
+        @if (!string.IsNullOrEmpty(Model.Biyografi))
+        {
+            <h5 class="mt-4">Biyografi</h5>
+            <p>@Model.Biyografi</p>
+        }
+    </div>
+</div>
+
+@if (Model.Nobetler.Any())
+{
+    <hr class="my-4" />
+    <h3>Son Nobetler</h3>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Saatler</th>
+                    <th>Bolum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var n in Model.Nobetler)
+                {
+                    <tr>
+                        <td>@n.Tarih.ToString("dd.MM.yyyy") <small class="text-muted">(@n.Tarih.ToString("dddd"))</small></td>
+                        <td>@n.BaslangicSaati.ToString(@"hh\:mm") - @n.BitisSaati.ToString(@"hh\:mm")</td>
+                        <td>@n.Bolum?.Ad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

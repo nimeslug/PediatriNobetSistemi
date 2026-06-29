@@ -1,8 +1,100 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Anasayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center my-5">
+    <h1 class="display-4">Pediatri Nobet Yonetim Sistemi</h1>
+    <p class="lead text-muted">Pediatri klinigi nobet, randevu ve bilgi yonetim platformu</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <a asp-controller="Takvim" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-0 text-center" style="transition: transform 0.2s;">
+                <div class="card-body p-4">
+                    <div class="display-3 mb-3">📅</div>
+                    <h4>Nobet Takvimi</h4>
+                    <p class="text-muted">Asistan nobetlerini takvim formatinda goruntule</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a asp-controller="Bolumler" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="display-3 mb-3">🏥</div>
+                    <h4>Bolumler</h4>
+                    <p class="text-muted">Pediatri bolumlerini ve guncel doluluklarini gor</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a asp-controller="AcilDurum" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="display-3 mb-3">🚨</div>
+                    <h4>Acil Durumlar</h4>
+                    <p class="text-muted">Guncel acil durum bildirimleri</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a asp-controller="Asistanlar" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="display-3 mb-3">👨‍⚕️</div>
+                    <h4>Asistanlar</h4>
+                    <p class="text-muted">Pediatri asistanlarini tani</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a asp-controller="OgretimUyeleri" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body p-4">
+                    <div class="display-3 mb-3">👩‍🏫</div>
+                    <h4>Ogretim Uyeleri</h4>
+                    <p class="text-muted">Ogretim uyelerimizi ve randevu saatlerini gor</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a asp-controller="Randevu" asp-action="Index" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border-0 text-center bg-primary text-white">
+                    <div class="card-body p-4">
+                        <div class="display-3 mb-3">📋</div>
+                        <h4>Randevularim</h4>
+                        <p>Mevcut randevularinizi yonetin</p>
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Account" asp-action="Login" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border-0 text-center bg-success text-white">
+                    <div class="card-body p-4">
+                        <div class="display-3 mb-3">🔐</div>
+                        <h4>Giris Yap</h4>
+                        <p>Randevu olusturmak icin giris yapin</p>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+<hr class="my-5" />
+
+<div class="row text-center text-muted small">
+    <div class="col-md-12">
+        <p>Pediatri Klinigimiz - Asistan Nobet Yonetim Sistemi © 2026</p>
+    </div>
 </div>
