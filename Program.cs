@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PediatriNobetSistemi.Data;
 using PediatriNobetSistemi.Models.Entities;
+using PediatriNobetSistemi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,11 +34,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+// ---------- Custom Services ----------
+builder.Services.AddScoped<IMailService, MailService>();
+
 // ---------- MVC ----------
 builder.Services.AddControllersWithViews();
-
-// ---------- Custom Services (mail vs. ileride buraya) ----------
-// builder.Services.AddScoped<IMailService, MailService>();
 
 var app = builder.Build();
 
@@ -83,7 +84,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// .NET 9+ static assets (UseStaticFiles yerine, daha hızlı)
+// .NET 9+ static assets
 app.MapStaticAssets();
 
 app.Run();

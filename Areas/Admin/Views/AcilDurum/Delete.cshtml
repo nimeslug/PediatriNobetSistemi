@@ -1,0 +1,21 @@
+﻿@model PediatriNobetSistemi.Models.Entities.AcilDurumHaberi
+@{
+    ViewData["Title"] = "Acil Durum Sil";
+}
+
+<h1 class="text-danger">Acil Durum Sil</h1>
+<div class="alert alert-warning">Bu islem geri alinamaz.</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Baslik</dt><dd class="col-sm-9">@Model.Baslik</dd>
+    <dt class="col-sm-3">Oncelik</dt><dd class="col-sm-9">@Model.Oncelik</dd>
+    <dt class="col-sm-3">Bolum</dt><dd class="col-sm-9">@(Model.Bolum?.Ad ?? "Tum bolumler")</dd>
+    <dt class="col-sm-3">Yayin</dt><dd class="col-sm-9">@Model.YayinTarihi.ToString("dd.MM.yyyy HH:mm")</dd>
+    <dt class="col-sm-3">Icerik</dt><dd class="col-sm-9"><pre style="white-space: pre-wrap;">@Model.Icerik</pre></dd>
+</dl>
+
+<form asp-action="Delete" method="post" class="d-inline">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+</form>

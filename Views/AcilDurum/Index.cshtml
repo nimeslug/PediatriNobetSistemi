@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PediatriNobetSistemi.Models.Entities.AcilDurumHaberi>
+@{
+    ViewData["Title"] = "Acil Durum Haberleri";
+}
+
+<h1 class="mb-4">🚨 Acil Durum Haberleri</h1>
+<p class="text-muted">Son 50 acil durum bildirimi yayinlanma tarihine gore listelenir.</p>
+<hr />
+
+@foreach (var haber in Model)
+{
+    var oncelikRenk = haber.Oncelik switch
+    {
+        PediatriNobetSistemi.Models.Entities.OncelikDuzeyi.Kritik => "danger",
+        PediatriNobetSistemi.Models.Entities.OncelikDuzeyi.Yuksek => "warning",
+        PediatriNobetSistemi.Models.Entities.OncelikDuzeyi.Orta => "info",
+        _ => "secondary"
+    };
+    <div class="card mb-3 shadow-sm border-@oncelikRenk">
+        <div class="card-header bg-@oncelikRenk @(oncelikRenk == "warning" || oncelikRenk == "info" ? "text-dark" : "text-white") d-flex justify-content-between">
+            <strong>@haber.Baslik</strong>
+            <span class="badge bg-light text-dark">@haber.Oncelik</span>
+        </div>
+        <div class="card-body">
+            <p style="white-space: pre-wrap;">@haber.Icerik</p>
+            <small class="text-muted">
+                📅 @haber.YayinTarihi.ToString("dd.MM.yyyy HH:mm")
+                @if (haber.Bolum != null)
+                {
+                    <span> • 🏥 @haber.Bolum.Ad</span>
+                }
+            </small>
+        </div>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henuz acil durum haberi bulunmuyor.</div>
+}

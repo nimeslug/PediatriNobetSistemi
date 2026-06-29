@@ -1,0 +1,53 @@
+﻿@model PediatriNobetSistemi.Models.Entities.AcilDurumHaberi
+@{
+    ViewData["Title"] = "Acil Durum Duzenle";
+}
+
+<h1>Acil Durum Haberi Duzenle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="YayinTarihi" />
+            <input type="hidden" asp-for="MailGonderildi" />
+
+            <div class="mb-3">
+                <label asp-for="Baslik" class="form-label"></label>
+                <input asp-for="Baslik" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Icerik" class="form-label"></label>
+                <textarea asp-for="Icerik" class="form-control" rows="6"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Oncelik" class="form-label"></label>
+                    <select asp-for="Oncelik" class="form-select">
+                        <option value="0">Dusuk</option>
+                        <option value="1">Orta</option>
+                        <option value="2">Yuksek</option>
+                        <option value="3">Kritik</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BolumId" class="form-label">Bolum</label>
+                    <select asp-for="BolumId" asp-items="ViewBag.Bolumler" class="form-select">
+                        <option value="">— Tum bolumler —</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guncelle</button>
+            <a asp-action="Index" class="btn btn-secondary">Iptal</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
