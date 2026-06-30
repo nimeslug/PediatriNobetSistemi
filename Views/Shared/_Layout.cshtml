@@ -3,103 +3,98 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Pediatri Nobet Sistemi</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Pediatri Kliniği</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PediatriNobetSistemi.styles.css" asp-append-version="true" />
 </head>
 <body>
     <div class="top-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="small">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <div>
                 <a asp-controller="AcilDurum" asp-action="Index">Acil Durumlar</a>
-                <a asp-controller="Takvim" asp-action="Index">Nobet Takvimi</a>
-                <a asp-controller="OgretimUyeleri" asp-action="Index">Ogretim Uyeleri</a>
+                <a asp-controller="Takvim" asp-action="Index">Nöbet Takvimi</a>
             </div>
-            <div class="small">
+            <div>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <span class="me-3">@User.Identity.Name</span>
+                    <span class="me-3">Merhaba, @User.Identity.Name</span>
                     <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-link p-0 text-white small">Cikis</button>
+                        <button type="submit" class="btn btn-link p-0 small">Çıkış</button>
                     </form>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login">Giris Yap</a>
+                    <a asp-controller="Account" asp-action="Login">Giriş Yap</a>
                 }
             </div>
         </div>
     </div>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-toggleable-lg">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pediatri Klinigi</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Bolumler" asp-action="Index">Bolumler</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Asistanlar" asp-action="Index">Asistanlar</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="OgretimUyeleri" asp-action="Index">Ogretim Uyeleri</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Takvim" asp-action="Index">Nobet Takvimi</a></li>
-                        @if (User.Identity?.IsAuthenticated == true)
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">PEDIATRI KLİNİĞİ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Bolumler" asp-action="Index">Bölümler</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="OgretimUyeleri" asp-action="Index">Öğretim Üyeleri</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Asistanlar" asp-action="Index">Asistanlar</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Takvim" asp-action="Index">Nöbet Takvimi</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="AcilDurum" asp-action="Index">Acil Durumlar</a></li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Randevu" asp-action="Index">Randevularım</a></li>
+                        @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Randevu" asp-action="Index">Randevularim</a></li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Yonetim</a></li>
-                            }
+                            <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Yönetim</a></li>
                         }
-                    </ul>
-                </div>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main role="main">
-        @RenderBody()
-    </main>
+    @RenderBody()
 
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h6>Pediatri Klinigi</h6>
-                    <p class="small mb-1">Tip Fakultesi Pediatri Bolumu</p>
-                    <p class="small mb-1">Cocuk Acil, Cocuk Yogun Bakim,</p>
-                    <p class="small">Cocuk Hematolojisi ve Onkolojisi</p>
+                <div class="col-md-4 mb-4">
+                    <h6>Pediatri Kliniği</h6>
+                    <p class="small">Tıp Fakültesi Pediatri Bölümü olarak çocukların sağlıklı yarınları için kaliteli hizmet sunmaktayız.</p>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h6>Hizli Erisim</h6>
+                <div class="col-md-4 mb-4">
+                    <h6>Hızlı Erişim</h6>
                     <ul class="list-unstyled small">
-                        <li><a asp-controller="Takvim" asp-action="Index">Nobet Takvimi</a></li>
-                        <li><a asp-controller="OgretimUyeleri" asp-action="Index">Randevu Al</a></li>
+                        <li><a asp-controller="Bolumler" asp-action="Index">Bölümler</a></li>
+                        <li><a asp-controller="OgretimUyeleri" asp-action="Index">Öğretim Üyeleri</a></li>
+                        <li><a asp-controller="Asistanlar" asp-action="Index">Asistanlar</a></li>
+                        <li><a asp-controller="Takvim" asp-action="Index">Nöbet Takvimi</a></li>
                         <li><a asp-controller="AcilDurum" asp-action="Index">Acil Durumlar</a></li>
-                        <li><a asp-controller="Bolumler" asp-action="Index">Bolumler</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h6>Iletisim</h6>
-                    <p class="small mb-1">Tel: +90 (___) ___ __ __</p>
-                    <p class="small mb-1">Email: info@pediatri.local</p>
-                    <p class="small">Acil: 7/24 hizmet</p>
+                <div class="col-md-4 mb-4">
+                    <h6>Bölümlerimiz</h6>
+                    <ul class="list-unstyled small">
+                        <li>Çocuk Acil</li>
+                        <li>Çocuk Yoğun Bakım</li>
+                        <li>Çocuk Hematoloji</li>
+                        <li>Çocuk Onkoloji</li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
-                <span>&copy; 2026 Pediatri Nobet Yonetim Sistemi</span>
-                <span>ISE 309 Web Programlama Proje Odevi</span>
+            <div class="footer-bottom d-flex justify-content-between flex-wrap">
+                <span>&copy; 2026 Pediatri Kliniği. Tüm hakları saklıdır.</span>
+                <span>ISE 309 Web Programlama Proje Ödevi</span>
             </div>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

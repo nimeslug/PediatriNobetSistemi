@@ -1,16 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Anasayfa";
-    Layout = "_Layout";
 }
 
 <section class="hero">
     <div class="container">
-        <span class="hero-tag">Pediatri Klinigi Yonetim Sistemi</span>
-        <h1>Cocuklarin Saglikli Yarinlari Icin<br />Profesyonel Bakim ve Egitim</h1>
+        <span class="hero-tag">Pediatri Kliniği Yönetim Sistemi</span>
+        <h1>Çocukların Sağlıklı Yarınları çin<br />Profesyonel Bakım ve Eğitim</h1>
         <p class="lead">
-            Klinigimizde pediatri asistanlari, ogretim uyeleri ve bolumler arasinda
-            koordineli nobet yonetimi, randevu sistemi ve acil durum iletisimi
-            tek catida hizmet vermektedir.
+            Kliniğimizde pediatri asistanları, öğretim üyeleri ve bölümler arasında
+            koordineli nöbet yönetimi, randevu sistemi ve acil durum iletişimi
+            tek çatı altında hizmet vermektedir.
         </p>
     </div>
 </section>
@@ -20,52 +19,52 @@
     <div class="row mt-4">
         <div class="col-md-4 mb-4">
             <div class="home-card">
-                <h4>Nobet Takvimi</h4>
-                <p>Asistanlarimizin gunluk, haftalik ve aylik nobet programlarini takvim formatinda goruntuleyin.</p>
-                <a asp-controller="Takvim" asp-action="Index" class="card-link">Takvimi Goruntule</a>
+                <h4>Nöbet Takvimi</h4>
+                <p>Asistanlarımızın günlük, haftalık ve aylık nöbet programlarını takvim formatında görüntüleyin.</p>
+                <a asp-controller="Takvim" asp-action="Index" class="card-link">Takvimi Görüntüle</a>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="home-card">
-                <h4>Bolumlerimiz</h4>
-                <p>Cocuk acil, cocuk yogun bakim, cocuk hematoloji ve onkoloji bolumlerinin guncel durumu.</p>
-                <a asp-controller="Bolumler" asp-action="Index" class="card-link">Bolumleri Inceleyin</a>
+                <h4>Bölümlerimiz</h4>
+                <p>Çocuk acil, çocuk yoğun bakım, çocuk hematoloji ve onkoloji bölümlerinin güncel durumu.</p>
+                <a asp-controller="Bolumler" asp-action="Index" class="card-link">Bölümleri nceleyin</a>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="home-card">
                 <h4>Acil Durum Bildirimleri</h4>
-                <p>Klinige ilskin acil durum haberlerine ve gelismelere hizli erisim.</p>
-                <a asp-controller="AcilDurum" asp-action="Index" class="card-link">Bildirimleri Gor</a>
+                <p>Kliniğe ilişkin acil durum haberlerine ve gelişmelere hızlı erişim.</p>
+                <a asp-controller="AcilDurum" asp-action="Index" class="card-link">Bildirimleri Gör</a>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="home-card">
                 <h4>Asistan Kadrosu</h4>
-                <p>Pediatri klinigimizde gorev alan tum asistanlarin profilleri ve iletisim bilgileri.</p>
-                <a asp-controller="Asistanlar" asp-action="Index" class="card-link">Asistanlari Tani</a>
+                <p>Pediatri kliniğimizde görev alan tüm asistanların profilleri ve iletişim bilgileri.</p>
+                <a asp-controller="Asistanlar" asp-action="Index" class="card-link">Asistanları Tanı</a>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="home-card">
-                <h4>Ogretim Uyeleri</h4>
-                <p>Klinigimizde gorev alan ogretim uyeleri, uzmanlik alanlari ve randevu saatleri.</p>
-                <a asp-controller="OgretimUyeleri" asp-action="Index" class="card-link">Hocalari Tani</a>
+                <h4>Öğretim Üyeleri</h4>
+                <p>Kliniğimizde görev alan öğretim üyeleri, uzmanlık alanları ve randevu saatleri.</p>
+                <a asp-controller="OgretimUyeleri" asp-action="Index" class="card-link">Hocaları Tanı</a>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="home-card">
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <h4>Randevu Yonetimi</h4>
-                    <p>Ogretim uyelerinden randevu olusturun, mevcut randevularinizi yonetin.</p>
-                    <a asp-controller="Randevu" asp-action="Index" class="card-link">Randevularim</a>
+                    <h4>Randevu Yönetimi</h4>
+                    <p>Öğretim üyelerinden randevu oluşturun, mevcut randevularınızı yönetin.</p>
+                    <a asp-controller="Randevu" asp-action="Index" class="card-link">Randevularım</a>
                 }
                 else
                 {
-                    <h4>Sisteme Giris</h4>
-                    <p>Randevu olusturmak ve klinik hizmetlerine erismek icin giris yapin.</p>
-                    <a asp-controller="Account" asp-action="Login" class="card-link">Giris Yap</a>
+                    <h4>Sisteme Giriş</h4>
+                    <p>Randevu oluşturmak ve klinik hizmetlerine erişmek için giriş yapın.</p>
+                    <a asp-controller="Account" asp-action="Login" class="card-link">Giriş Yap</a>
                 }
             </div>
         </div>
@@ -77,7 +76,7 @@
         <div class="col-md-3 mb-3">
             <div class="stat-box">
                 <div class="stat-value">3</div>
-                <div class="stat-label">Bolum</div>
+                <div class="stat-label">Bölüm</div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
@@ -95,7 +94,7 @@
         <div class="col-md-3 mb-3">
             <div class="stat-box">
                 <div class="stat-value">100%</div>
-                <div class="stat-label">Pediatri Odakli</div>
+                <div class="stat-label">Pediatri Odaklı</div>
             </div>
         </div>
     </div>

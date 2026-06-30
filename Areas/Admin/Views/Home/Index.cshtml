@@ -1,43 +1,117 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
 }
-<h1 class="mb-4">Admin Dashboard</h1>
-<div class="row">
-    <div class="col-md-3 mb-3">
-        <div class="card text-bg-primary">
-            <div class="card-body">
-                <h5 class="card-title">Bölümler</h5>
-                <p class="display-6">—</p>
-                <a asp-controller="Bolum" asp-action="Index" class="text-white">Yönet →</a>
-            </div>
-        </div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Yönetim Paneli</h2>
+        <p class="text-muted mb-0">Pediatri Nöbet Sistemi yönetim merkezi</p>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-bg-success">
-            <div class="card-body">
-                <h5 class="card-title">Asistanlar</h5>
-                <p class="display-6">—</p>
-                <a asp-controller="Asistan" asp-action="Index" class="text-white">Yönet →</a>
+    <span class="badge bg-success p-2">Admin: @User.Identity?.Name</span>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="Bolum" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">🏥</span>
+                        <h5 class="card-title mb-0">Bölümler</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Pediatri bölümlerini ekle, düzenle, sil</p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-bg-warning">
-            <div class="card-body">
-                <h5 class="card-title">Öğretim Üyeleri</h5>
-                <p class="display-6">—</p>
-                <a asp-controller="OgretimUyesi" asp-action="Index" class="text-white">Yönet →</a>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="Asistan" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">👨‍⚕️</span>
+                        <h5 class="card-title mb-0">Asistanlar</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Asistan kadrosunu yönet</p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-bg-danger">
-            <div class="card-body">
-                <h5 class="card-title">Nöbetler</h5>
-                <p class="display-6">—</p>
-                <a asp-controller="Nobet" asp-action="Index" class="text-white">Yönet →</a>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="OgretimUyesi" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">👩‍🏫</span>
+                        <h5 class="card-title mb-0">Öğretim Üyeleri</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Öğretim üyelerini yönet</p>
+                </div>
             </div>
-        </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="Nobet" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">📅</span>
+                        <h5 class="card-title mb-0">Nöbetler</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Nöbet programını oluştur ve düzenle</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="Musaitlik" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">🕐</span>
+                        <h5 class="card-title mb-0">Müsaitlikler</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Öğretim üyesi müsaitlik slotları</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="Randevu" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">📋</span>
+                        <h5 class="card-title mb-0">Randevular</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Tüm randevuları görüntüle ve yönet</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a asp-area="Admin" asp-controller="AcilDurum" asp-action="Index" class="text-decoration-none">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span style="font-size: 2rem; margin-right: 0.75rem;">🚨</span>
+                        <h5 class="card-title mb-0">Acil Durumlar</h5>
+                    </div>
+                    <p class="text-muted small mb-0">Acil durum haberlerini yayınla, mail gönder</p>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
-<p class="mt-4 text-muted">Sol menüden yönetmek istediğiniz bölümü seçin.</p>
+
+<div class="alert alert-info">
+    <strong>💡 İpucu:</strong> Sol menüden istediğin modüle hızlıca geçebilirsin.
+    Yeni acil durum haberi yayınladığında tüm asistan ve öğretim üyelerine otomatik mail gönderilir.
+</div>
